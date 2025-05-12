@@ -6,8 +6,8 @@ ENV LIQUIBASE_PERCONA=4.31.0
 ENV PERCONA_TOOLKIT=3.3.0
 ENV MYSQL_CONNECTOR=9.3.0
 
-RUN wget -O /liquibase/lib/liquibase-percona-${LIQUIBASE_PERCONA}.jar https://github.com/liquibase/liquibase-percona/releases/download/v${LIQUIBASE_PERCONA}/liquibase-percona-${LIQUIBASE_PERCONA}.jar
-RUN chown 1001:1001 /liquibase/lib/liquibase-percona-${LIQUIBASE_PERCONA}.jar
+RUN wget -O /liquibase/lib/liquibase-percona-$LIQUIBASE_PERCONA.jar https://github.com/liquibase/liquibase-percona/releases/download/v$LIQUIBASE_PERCONA/liquibase-percona-$LIQUIBASE_PERCONA.jar
+RUN chown 1001:1001 /liquibase/lib/liquibase-percona-$LIQUIBASE_PERCONA.jar
 
 RUN apt update && apt-get install perl libdbi-perl libdbd-mysql-perl libterm-readkey-perl libio-socket-ssl-perl -y
 
