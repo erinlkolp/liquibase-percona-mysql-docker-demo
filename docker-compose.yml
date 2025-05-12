@@ -56,6 +56,8 @@ services:
     volumes:
       - ./liquibase.properties:/liquibase/liquibase.properties
       - ./liquibase-percona-4.31.0.jar:/liquibase/lib/liquibase-percona-4.31.0.jar
+      - ./changelog.xml:/liquibase/changelog.xml
+      - ./schema/:/liquibase/schema/
     links:
       - db
       - dbreference
