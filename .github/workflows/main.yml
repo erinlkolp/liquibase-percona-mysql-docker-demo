@@ -20,9 +20,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Start up demo environment
-      - name: Install Dependencies
-        run: pip install docker-compose
+      - name: Install Docker Compose
+        uses: KengoTODA/actions-setup-docker-compose@v1
 
       # Start up demo environment
       - name: Set Up Test Env
