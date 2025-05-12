@@ -27,18 +27,32 @@ services:
       # This auto-loads our base db and schema without 3rd party tools or scripts.
       - ./demodb.sql:/docker-entrypoint-initdb.d/1.sql
 
+  # liquibase:
+  #   image: ekolp/liquibase
+  #   container_name: liquibase
+  #   entrypoint:
+  #     - /bin/bash
+  #   tty: true
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile-liquibase
+  #   volumes:
+  #     - ./:/wd
+  #   working_dir: /wd
+  #   links:
+  #     - db
+
   liquibase:
-    image: ekolp/liquibase
+    image: liquibase/liquibase:4.31.1
     container_name: liquibase
-    entrypoint:
-      - /bin/bash
+    command: --defaults-file=/wd/liquibase.properties update
     tty: true
-    build:
-      context: ./
-      dockerfile: Dockerfile-liquibase
-    volumes:
-      - ./:/wd
+    # build:
+    #   context: ./
+    #   dockerfile: Dockerfile-liquibase
     working_dir: /wd
+    volumes:
+      - ./liquibase.properties:/wd/liquibase.properties
     links:
       - db
-
+      - dbreference
