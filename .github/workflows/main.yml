@@ -4,16 +4,12 @@ on:
   push:
     branches: [ main ]
 
-env:
-  AWS_REGION: "us-east-1"
-
 jobs:
   deploy:
     name: "Continuous Integration Pipeline"
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      # id-token: write
 
     steps:
       # Checkout the repository
@@ -23,7 +19,7 @@ jobs:
       - name: Install Docker Compose
         uses: KengoTODA/actions-setup-docker-compose@v1
         with:
-          version: '2.15.1' # the full version of `docker-compose` command
+          version: '2.15.1'
     
       # Start up demo environment
       - name: Set Up Test Env
