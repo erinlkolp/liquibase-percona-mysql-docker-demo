@@ -46,13 +46,15 @@ services:
     image: liquibase/liquibase:4.31.1
     container_name: liquibase
     command: --defaults-file=/wd/liquibase.properties update
-    tty: true
+    # tty: true
+    environment:
+      - INSTALL_MYSQL=true
     # build:
     #   context: ./
     #   dockerfile: Dockerfile-liquibase
-    working_dir: /wd
+    working_dir: /liquibase
     volumes:
-      - ./liquibase.properties:/wd/liquibase.properties
+      - ./liquibase.properties:/liquibase/liquibase.properties
       - ./liquibase-percona-4.31.0.jar:/liquibase/lib/liquibase-percona-4.31.0.jar
     links:
       - db

@@ -21,9 +21,9 @@ jobs:
         with:
           version: '2.15.1'
     
-      # Install MySQL Java Connector
-      - name: Install MySQL Connector
-        id: runinstallmysql
+      # Install Percona Toolkit Extension
+      - name: Install Liquibase Percona Extension
+        id: runinstallptkext
         run: wget -O liquibase-percona-4.31.0.jar https://github.com/liquibase/liquibase-percona/releases/download/v4.31.0/liquibase-percona-4.31.0.jar
 
       # Start up demo environment
