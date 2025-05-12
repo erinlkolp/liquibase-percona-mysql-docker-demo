@@ -9,7 +9,7 @@ ENV MYSQL_CONNECTOR=9.3.0
 RUN wget -O /liquibase/lib/liquibase-percona-$LIQUIBASE_PERCONA.jar https://github.com/liquibase/liquibase-percona/releases/download/v$LIQUIBASE_PERCONA/liquibase-percona-$LIQUIBASE_PERCONA.jar
 RUN chown 1001:1001 /liquibase/lib/liquibase-percona-$LIQUIBASE_PERCONA.jar
 
-RUN apt update && apt-get install perl libdbi-perl libdbd-mysql-perl libterm-readkey-perl libio-socket-ssl-perl -y
+RUN apt update && apt-get install wget perl libdbi-perl libdbd-mysql-perl libterm-readkey-perl libio-socket-ssl-perl -y
 
 RUN wget https://downloads.percona.com/downloads/percona-toolkit/3.3.0/binary/debian/buster/x86_64/percona-toolkit_3.3.0-1.buster_amd64.deb && \
     dpkg -i percona-toolkit_3.3.0-1.buster_amd64.deb
