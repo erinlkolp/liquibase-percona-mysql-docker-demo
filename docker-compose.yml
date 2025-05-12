@@ -53,6 +53,7 @@ services:
     working_dir: /wd
     volumes:
       - ./liquibase.properties:/wd/liquibase.properties
+      - ./liquibase-percona-4.31.0.jar:/liquibase/lib/liquibase-percona-4.31.0.jar
     links:
       - db
       - dbreference
