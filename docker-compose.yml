@@ -2,26 +2,30 @@ version: '3'
 
 services:
   db:
-    image: mysql:5.7
     container_name: db
-    ports:
-      - "3306:3306"
-    command: --default-authentication-plugin=mysql_native_password --sql_mode=''
+    image: percona/percona-server:8.0.39
     restart: always
+    platform: linux/amd64
     environment:
-      MYSQL_ROOT_PASSWORD: "example"
-      MYSQL_DATABASE: demodb
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - '3306:3306'
+    volumes:
+      # This auto-loads our base db and schema without 3rd party tools or scripts.
+      - ./demodb.sql:/docker-entrypoint-initdb.d/1.sql
 
   dbreference:
-    image: mysql:5.7
     container_name: dbreference
-    ports:
-      - "3307:3306"
-    command: --default-authentication-plugin=mysql_native_password --sql_mode=''
+    image: percona/percona-server:8.0.39
     restart: always
+    platform: linux/amd64
     environment:
-      MYSQL_ROOT_PASSWORD: "example"
-      MYSQL_DATABASE: demodb
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - '3307:3306'
+    volumes:
+      # This auto-loads our base db and schema without 3rd party tools or scripts.
+      - ./demodb.sql:/docker-entrypoint-initdb.d/1.sql
 
   liquibase:
     image: ekolp/liquibase
@@ -37,3 +41,4 @@ services:
     working_dir: /wd
     links:
       - db
+

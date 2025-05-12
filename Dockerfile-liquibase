@@ -3,8 +3,8 @@ FROM liquibase/liquibase:4.3.4
 USER root
 ENV PATH=/liquibase/:$PATH
 
-RUN wget -O /liquibase/lib/liquibase-percona-4.3.4.jar https://liquibase.jira.com/wiki/download/attachments/47284233/liquibase-percona-4.3.4.jar?api=v2
-RUN chown 1001:1001 /liquibase/lib/liquibase-percona-4.3.4.jar
+RUN wget -O /liquibase/lib/liquibase-percona-4.31.0.jar https://github.com/liquibase/liquibase-percona/releases/download/v4.31.0/liquibase-percona-4.31.0.jar
+RUN chown 1001:1001 /liquibase/lib/liquibase-percona-4.31.0.jar
 
 RUN apt update && apt-get install perl libdbi-perl libdbd-mysql-perl libterm-readkey-perl libio-socket-ssl-perl -y
 
