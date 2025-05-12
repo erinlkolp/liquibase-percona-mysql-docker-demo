@@ -45,7 +45,7 @@ services:
   liquibase:
     image: liquibase/liquibase:4.31.1
     container_name: liquibase
-    command: --defaults-file=/wd/liquibase.properties update
+    command: --changelog-file=changelog.xml --defaults-file=liquibase.properties update
     # tty: true
     environment:
       - INSTALL_MYSQL=true
