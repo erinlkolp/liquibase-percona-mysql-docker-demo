@@ -1,21 +1,20 @@
-FROM liquibase/liquibase:4.31.1
+FROM liquibase/liquibase:4.3.4
 
 USER root
-ENV PATH=/liquibase/:$
-ENV LIQUIBASE_PERCONA=4.31.0
-ENV PERCONA_TOOLKIT=3.3.0
-ENV MYSQL_CONNECTOR=9.3.0
+ENV PATH=/liquibase/:$PATH
 
-# RUN apk add wget perl libdbi-perl libdbd-mysql-perl libterm-readkey-perl libio-socket-ssl-perl -y
+RUN wget -O /liquibase/lib/liquibase-percona-4.31.0.jar https://github.com/liquibase/liquibase-percona/releases/download/v4.31.0/liquibase-percona-4.31.0.jar
+RUN chown 1001:1001 /liquibase/lib/liquibase-percona-4.31.0.jar
 
-RUN wget -O /liquibase/lib/liquibase-percona-4.31.0.jar https://github.com/liquibase/liquibase-percona/releases/download/v$LIQUIBASE_PERCONA/liquibase-percona-4.31.0.jar
-RUN chown 1001:1001 /liquibase/lib/liquibase-percona-4.31.0jar
+RUN apt update && apt-get install perl libdbi-perl libdbd-mysql-perl libterm-readkey-perl libio-socket-ssl-perl -y
 
 RUN wget https://downloads.percona.com/downloads/percona-toolkit/3.3.0/binary/debian/buster/x86_64/percona-toolkit_3.3.0-1.buster_amd64.deb && \
     dpkg -i percona-toolkit_3.3.0-1.buster_amd64.deb
 
 RUN wget https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-j-9.3.0.tar.gz && \
     tar xvf mysql-connector-j-9.3.0.tar.gz && cp mysql-connector-j-9.3.0/mysql-connector-j-9.3.0.jar /lib/
+
+# COPY mysql-connector-java-5.1.47.jar /lib/mysql-connector-java-5.1.47.jar
 
 COPY liquibase /liquibase/liquibase
 RUN chown 1001:1001 /liquibase/liquibase
