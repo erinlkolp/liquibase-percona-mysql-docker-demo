@@ -22,7 +22,9 @@ jobs:
 
       - name: Install Docker Compose
         uses: KengoTODA/actions-setup-docker-compose@v1
-
+        with:
+          version: '2.15.1' # the full version of `docker-compose` command
+    
       # Start up demo environment
       - name: Set Up Test Env
         run: docker-compose up -d && sleep 15
