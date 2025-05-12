@@ -22,6 +22,10 @@ jobs:
 
       # Start up demo environment
       - name: Install Dependencies
+        run: pip install docker-compose
+
+      # Start up demo environment
+      - name: Set Up Test Env
         run: docker-compose up -d && sleep 15
 
       # Run Liquibase
