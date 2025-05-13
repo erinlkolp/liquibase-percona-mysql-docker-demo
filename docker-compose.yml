@@ -14,50 +14,20 @@ services:
       # This auto-loads our base db and schema without 3rd party tools or scripts.
       - ./demodb.sql:/docker-entrypoint-initdb.d/1.sql
 
-  dbreference:
-    container_name: dbreference
-    image: percona/percona-server:8.0.39
-    restart: always
-    platform: linux/amd64
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-    ports:
-      - '3307:3306'
-    volumes:
-      # This auto-loads our base db and schema without 3rd party tools or scripts.
-      - ./demodb.sql:/docker-entrypoint-initdb.d/1.sql
-
-  # liquibase:
-  #   image: ekolp/liquibase
-  #   container_name: liquibase
-  #   entrypoint:
-  #     - /bin/bash
-  #   tty: true
-  #   build:
-  #     context: ./
-  #     dockerfile: Dockerfile-liquibase
-  #   volumes:
-  #     - ./:/wd
-  #   working_dir: /wd
-  #   links:
-  #     - db
-
   liquibase:
-    image: liquibase/liquibase:4.31.1
+    image: ekolp/liquibase:latest
     container_name: liquibase
-    command: --changelog-file=changelog.xml --defaults-file=liquibase.properties update
-    # tty: true
+    command: liquibase --defaults-file=/liquibase/liquibase.properties update
     environment:
       - INSTALL_MYSQL=true
-    # build:
-    #   context: ./
-    #   dockerfile: Dockerfile-liquibase
-    working_dir: /liquibase
+      # - JAVA_OPTS='-Dliquibase.percona.options="--recursion-method=none --set-vars wait_timeout=31536000,innodb_lock_wait_timeout=31536000,lock_wait_timeout=31536000 --max-load Threads_running=80 --critical-load Threads_running=200 --alter-foreign-keys-method=auto"'
+    build:
+      context: ./
+      dockerfile: Dockerfile
     volumes:
       - ./liquibase.properties:/liquibase/liquibase.properties
-      - ./liquibase-percona-4.31.0.jar:/liquibase/lib/liquibase-percona-4.31.0.jar
       - ./changelog.xml:/liquibase/changelog.xml
       - ./schema/:/liquibase/schema/
+      - ./liquibase:/liquibase/liquibase
     links:
       - db
-      - dbreference

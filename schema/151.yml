@@ -1,0 +1,14 @@
+---
+
+databaseChangeLog:
+- changeSet:
+    id: 151-1
+    author: Erin L. Kolp
+    changes:
+    - addColumn:
+        tableName: example
+        usePercona: false
+        columns:
+          - column:
+              name: address
+              type: varchar(255)
