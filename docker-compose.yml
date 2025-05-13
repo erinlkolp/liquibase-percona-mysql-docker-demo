@@ -17,10 +17,9 @@ services:
   liquibase:
     image: ekolp/liquibase:latest
     container_name: liquibase
-    command: liquibase --defaults-file=/liquibase/liquibase.properties update
+    command: --defaults-file=/liquibase/liquibase.properties update
     environment:
       - INSTALL_MYSQL=true
-      # - JAVA_OPTS='-Dliquibase.percona.options="--recursion-method=none --set-vars wait_timeout=31536000,innodb_lock_wait_timeout=31536000,lock_wait_timeout=31536000 --max-load Threads_running=80 --critical-load Threads_running=200 --alter-foreign-keys-method=auto"'
     build:
       context: ./
       dockerfile: Dockerfile
@@ -28,6 +27,5 @@ services:
       - ./liquibase.properties:/liquibase/liquibase.properties
       - ./changelog.xml:/liquibase/changelog.xml
       - ./schema/:/liquibase/schema/
-      - ./liquibase:/liquibase/liquibase
     links:
       - db
