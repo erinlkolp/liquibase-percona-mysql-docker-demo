@@ -24,7 +24,7 @@ jobs:
       # Run Liquibase in Two Phases so the final container exits. -elk
       - name: Run Liquibase
         id: runcompose
-        run: docker-compose up db -d
+        run: docker-compose up db -d && sleep 20
 
       - name: Run Liquibase
         id: runliquibase
