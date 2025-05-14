@@ -2,7 +2,11 @@ name: Liquibase Continuous Integration
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - 'main'
+      - 'feature/**'
+      - 'bugfix/**'
+      - 'staging'
 
 jobs:
   ci:
