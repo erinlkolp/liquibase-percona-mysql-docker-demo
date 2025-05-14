@@ -22,7 +22,7 @@ jobs:
           version: '2.15.1'
 
       # Run Liquibase in Two Phases so the final container exits. -elk
-      - name: Run Liquibase
+      - name: Run Percona Server
         id: rundbcontainer
         run: docker-compose up db -d && sleep 20
 
