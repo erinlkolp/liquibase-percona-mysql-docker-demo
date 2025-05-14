@@ -1,7 +1,7 @@
 FROM ubuntu:22.04 AS build
 USER root
 
-RUN apt update && apt-get install wget perl libdbi-perl libdbd-mysql-perl libterm-readkey-perl libio-socket-ssl-perl -y
+RUN apt update && apt-get install telnet wget perl libdbi-perl libdbd-mysql-perl libterm-readkey-perl libio-socket-ssl-perl -y
 
 RUN wget https://downloads.percona.com/downloads/percona-toolkit/3.7.0/binary/debian/jammy/x86_64/percona-toolkit_3.7.0-1.jammy_amd64.deb && \
    dpkg -i percona-toolkit_3.7.0-1.jammy_amd64.deb
