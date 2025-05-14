@@ -5,16 +5,16 @@
 This repository is an **example template** using Liquibase, Docker, and GitHub Actions for Continuous Integration and Deployment.
 
 ### To build this, type:
-```
+```bash
 docker-compose build
 ```
 
 ### To run this, type:
-```
+```bash
 docker-compose up
 ```
 
 ### To stop this, type:
-```
+```bash
 docker-compose down --remove-orphans
 ```
