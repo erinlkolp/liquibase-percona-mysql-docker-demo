@@ -9,7 +9,7 @@ jobs:
     name: "Continuous Integration Pipeline"
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
 
     steps:
       # Checkout the repository
@@ -20,12 +20,8 @@ jobs:
         uses: KengoTODA/actions-setup-docker-compose@v1
         with:
           version: '2.15.1'
-    
-      # Start up demo environment
-      - name: Set Up Test Env
-        run: docker-compose up db -d && sleep 20
 
       # Run Liquibase
       - name: Run Liquibase
         id: runliquibase
-        run: docker-compose up liquibase
+        run: docker-compose up
