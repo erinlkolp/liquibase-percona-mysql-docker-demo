@@ -1,4 +1,4 @@
-name: Liquibase CI
+name: Liquibase Continuous Integration
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    name: "Continuous Integration Pipeline"
+    name: "Liquibase Continuous Integration Pipeline"
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,7 +23,7 @@ jobs:
 
       # Run Liquibase in Two Phases so the final container exits. -elk
       - name: Run Liquibase
-        id: runcompose
+        id: rundbcontainer
         run: docker-compose up db -d && sleep 20
 
       - name: Run Liquibase
