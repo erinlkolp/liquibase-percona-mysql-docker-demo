@@ -1,3 +1,5 @@
+![Continuous Integration](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+
 # erinlkolp / liquibase-percona-mysql-docker-demo
 
 ![](https://miro.medium.com/max/491/1*fwQrAHSeYhoQ1xaAjX5sTQ.jpeg)
