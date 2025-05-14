@@ -1,4 +1,4 @@
-![Continuous Integration](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+![Continuous Integration](https://github.com/erinlkolp/liquibase-percona-mysql-docker-demo/actions/workflows/main.yml/badge.svg)
 
 # erinlkolp / liquibase-percona-mysql-docker-demo
 
