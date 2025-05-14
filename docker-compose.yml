@@ -14,10 +14,13 @@ services:
       # This auto-loads our base db and schema without 3rd party tools or scripts.
       - ./demodb.sql:/docker-entrypoint-initdb.d/1.sql
     healthcheck:
+      # Truth be told, I don't really care what this returns as long as it exits zero.
+      #   I needed a startup delay on the Liquibase container so that there was ample time
+      #   for the db to fully initialize. -elk
       test: bash -c "/usr/bin/netstat -ltn | grep -c 3306"
       interval: 15s
       retries: 5
-      start_period: 15s
+      start_period: 20s # This controls the startup delay of the Liquibase container.
       timeout: 5s
 
   liquibase:
