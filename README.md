@@ -2,7 +2,7 @@
 
 # erinlkolp / liquibase-percona-mysql-docker-demo
 
-This repository is an **example template** using Liquibase, Percona Toolkit, Docker, and GitHub Actions for Continuous Integration of database schema migrations via automation.
+This repository is an **example template** using [Liquibase](https://github.com/liquibase/liquibase), [Percona Toolkit](https://github.com/percona/percona-toolkit), [Docker](https://github.com/liquibase/docker), and [GitHub Actions](https://github.com/erinlkolp/liquibase-percona-mysql-docker-demo/actions) for Continuous Integration of database schema migrations via automation.
 
 ```mermaid
 graph LR
