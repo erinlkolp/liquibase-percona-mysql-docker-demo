@@ -4,6 +4,14 @@
 
 This repository is an **example template** using Liquibase, Docker, and GitHub Actions for Continuous Integration.
 
+```mermaid
+graph LR
+A[Square Rect] -- Link text --> B((Circle))
+A --> C(Round Rect)
+B --> D{Rhombus}
+C --> D
+```
+
 You can use this repository today by forking and replacing the following files with your own:
 
  - demodb.sql # This could be a bare schema definition or a database dump, depending on the situation.
