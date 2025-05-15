@@ -17,6 +17,8 @@ You can use this repository today by forking and replacing the following files w
 
 ## Example Migrations
 
+XML:
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 
@@ -34,6 +36,8 @@ You can use this repository today by forking and replacing the following files w
     </changeSet>
 </databaseChangeLog>
 ```
+
+Yaml:
 
 ```yaml
 databaseChangeLog:
