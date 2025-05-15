@@ -6,7 +6,7 @@ This repository is an **example template** using Liquibase, Docker, and GitHub A
 
 ```mermaid
 graph LR
-Liquibase[Square Rect] --> MySQL[Square Rect]
+A[Liquibase] --> B[MySQL]
 ```
 
 You can use this repository today by forking and replacing the following files with your own:
