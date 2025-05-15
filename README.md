@@ -71,7 +71,13 @@ databaseChangeLog:
       retries: 5
       start_period: 20s # This controls the startup delay of the Liquibase container.
       timeout: 5s
-
+      
+  liquibase:
+    container_name: liquibase
+    ...
+    depends_on:
+      db:
+        condition: service_healthy
 ```
 
 ## Command Reference
