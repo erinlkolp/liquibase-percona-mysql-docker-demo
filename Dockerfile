@@ -15,4 +15,7 @@ COPY --from=build /usr/lib/ /usr/lib/
 COPY --from=build /opt/ /opt/
 COPY --from=build /usr/share/ /usr/share/
 
+USER liquibase
+
 RUN wget -O /liquibase/lib/liquibase-percona-4.31.0.jar https://github.com/liquibase/liquibase-percona/releases/download/v4.31.0/liquibase-percona-4.31.0.jar
+
