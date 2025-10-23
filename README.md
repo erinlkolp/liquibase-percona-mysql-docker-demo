@@ -6,14 +6,18 @@ This repository is an **example template** using [Liquibase](https://github.com/
 
 ```mermaid
 graph LR
-A[Liquibase] --> B[MySQL]
+    A[Schema Changes] --> B[Liquibase]
+    B --> C[Percona Toolkit]
+    C --> D[MySQL Database]
+    E[GitHub Actions] -.CI/CD.-> B
 ```
-## Use
+## Getting Started
 
-You can use this repository today by forking and replacing the following files with your own:
+Fork this repository and customize the following files for your database:
 
- - demodb.sql # This could be a bare schema definition or a database dump, depending on the situation.
- - schema/*   # Replace the files with your own. You can name them numerically to control the sequence.
+- **demodb.sql** - Your base database schema or initial data dump
+- **schema/** - Your Liquibase migration files (XML or YAML format)
+  - Files are processed in alphabetical order - use numeric prefixes to control sequence (e.g., `001-initial.xml`, `002-add-users.yaml`)
 
 ## Example Migrations
 
@@ -56,46 +60,46 @@ databaseChangeLog:
 
 ## Notable Components
 
-#### Liquibase Container Startup Delay
+#### Service Dependencies and Health Checks
+
+The Liquibase container waits for the MySQL database to be fully initialized before running migrations:
 
 ```yaml
   db:
-    container_name: db
-    ...
     healthcheck:
-      # Truth be told, I don't really care what this returns as long as it exits zero.
-      #   I needed a startup delay on the Liquibase container so that there was ample time
-      #   for the db to fully initialize. -elk
-      test: bash -c "/usr/bin/netstat -ltn | grep -c 3306"
+      # Ensures MySQL is listening before starting dependent services
+      test: ["CMD", "bash", "-c", "netstat -ltn | grep -q 3306"]
       interval: 15s
       retries: 5
-      start_period: 20s # This controls the startup delay of the Liquibase container.
+      start_period: 20s
       timeout: 5s
-      
+
   liquibase:
-    container_name: liquibase
-    ...
     depends_on:
       db:
         condition: service_healthy
 ```
 
+This prevents migration failures due to the database not being ready.
+
 ## Command Reference
 
-#### To build this, type:
+#### Build the containers:
 ```bash
-docker-compose build
+docker compose build
 ```
 
-#### To run this, type:
+#### Start the services:
 ```bash
-docker-compose up
+docker compose up
 ```
 
-#### To stop this, type:
+#### Stop the services:
 ```bash
-docker-compose down
+docker compose down
 ```
+
+> **Note:** These commands use Docker Compose V2 syntax (`docker compose`). If you're using V1, use `docker-compose` instead.
 
 # License & Author
 
