@@ -7,6 +7,10 @@ on:
       - 'feature/**'
       - 'bugfix/**'
       - 'staging'
+  pull_request:
+    branches:
+      - 'main'
+      - 'staging'
 
 jobs:
   ci:
@@ -14,6 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+
+    env:
+      MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      LIQUIBASE_USERNAME: root
+      LIQUIBASE_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
 
     steps:
       - name: Checkout
@@ -28,10 +37,13 @@ jobs:
         id: buildlbcontainer
         run: docker-compose build
 
-      - name: Run Percona Server
-        id: rundbcontainer
-        run: docker-compose up db -d && sleep 20
+      - name: Run Migrations
+        id: runmigrations
+        # Starts db, waits for it to pass its health check, then starts
+        # liquibase. Exits with liquibase's exit code so the step fails
+        # on any migration error.
+        run: docker-compose up --exit-code-from liquibase
 
-      - name: Run Liquibase
-        id: runlbcontainer
-        run: docker-compose up liquibase
+      - name: Tear Down Services
+        if: always()
+        run: docker-compose down --volumes --remove-orphans

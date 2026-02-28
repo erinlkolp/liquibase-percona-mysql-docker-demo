@@ -5,16 +5,15 @@ services:
     restart: always
     platform: linux/amd64
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - '3306:3306'
     volumes:
       # This auto-loads our base db and schema without 3rd party tools or scripts.
       - ./demodb.sql:/docker-entrypoint-initdb.d/1.sql
     healthcheck:
-      # Ensures MySQL is listening before starting dependent services.
-      # Provides a startup delay for the Liquibase container.
-      test: ["CMD", "bash", "-c", "netstat -ltn | grep -q 3306"]
+      # Verifies MySQL is accepting connections before starting dependent services.
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}", "--silent"]
       interval: 15s
       retries: 5
       start_period: 20s
@@ -26,6 +25,8 @@ services:
     command: --defaults-file=/liquibase/liquibase.properties update
     environment:
       - INSTALL_MYSQL=true
+      - LIQUIBASE_COMMAND_USERNAME=${LIQUIBASE_USERNAME}
+      - LIQUIBASE_COMMAND_PASSWORD=${LIQUIBASE_PASSWORD}
     build:
       context: ./
       dockerfile: Dockerfile
