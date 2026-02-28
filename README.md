@@ -19,6 +19,27 @@ Fork this repository and customize the following files for your database:
 - **schema/** - Your Liquibase migration files (XML or YAML format)
   - Files are processed in alphabetical order - use numeric prefixes to control sequence (e.g., `001-initial.xml`, `002-add-users.yaml`)
 
+### Credentials
+
+Credentials are never hardcoded. They are supplied through environment variables.
+
+**Local development** — copy `.env.example` to `.env` and set your values:
+
+```bash
+cp .env.example .env
+# edit .env with your own passwords
+```
+
+`.env` is listed in `.gitignore` and must never be committed.
+
+**GitHub Actions CI** — add the following repository secret:
+
+| Secret | Description |
+|--------|-------------|
+| `MYSQL_ROOT_PASSWORD` | MySQL root password (also used by Liquibase) |
+
+Add it at **Settings → Secrets and variables → Actions → New repository secret**.
+
 ## Example Migrations
 
 XML:
@@ -67,8 +88,8 @@ The Liquibase container waits for the MySQL database to be fully initialized bef
 ```yaml
   db:
     healthcheck:
-      # Ensures MySQL is listening before starting dependent services
-      test: ["CMD", "bash", "-c", "netstat -ltn | grep -q 3306"]
+      # Verifies MySQL is accepting connections before starting dependent services
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}", "--silent"]
       interval: 15s
       retries: 5
       start_period: 20s
