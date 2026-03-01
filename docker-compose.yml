@@ -12,11 +12,13 @@ services:
       # This auto-loads our base db and schema without 3rd party tools or scripts.
       - ./demodb.sql:/docker-entrypoint-initdb.d/1.sql
     healthcheck:
-      # Verifies MySQL is accepting connections before starting dependent services.
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}", "--silent"]
+      # Verifies MySQL has finished init scripts and demodb is accessible before
+      # starting dependent services. Using mysql -e rather than mysqladmin ping
+      # so we wait for the full init phase (including demodb.sql) to complete.
+      test: ["CMD", "mysql", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}", "-e", "SELECT 1", "demodb"]
       interval: 15s
       retries: 5
-      start_period: 20s
+      start_period: 30s
       timeout: 5s
 
   liquibase:
